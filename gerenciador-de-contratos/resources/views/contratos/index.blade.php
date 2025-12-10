@@ -42,10 +42,12 @@
             </a>
         </div>
         
-        <div class="card shadow-sm border-0"> @if(!empty($contratos))
+        <div class="card shadow-sm border-0"> 
+            
             <ul class="list-group list-group-flush rounded">
-                @foreach ($contratos as $contrato)
-                <li class="list-group-item list-group-item-action p-4"> <div class="d-flex justify-content-between align-items-start">
+            @forelse ($contratos as $contrato)
+                <li class="list-group-item list-group-item-action p-4"> 
+                    <div class="d-flex justify-content-between align-items-start">
         
                         <div class="me-4 flex-grow-1">
                             
@@ -94,15 +96,16 @@
                         </div>
                     </div>
                 </li>
-                @endforeach
+            @empty
+                {{-- Conteúdo a ser exibido SE o array $contratos estiver vazio --}}
+                <div class="card-body py-5 text-center text-muted">
+                    <i class="bi bi-folder-x display-4 mb-3 d-block"></i>
+                    <p class="h5">Nenhum contrato cadastrado ainda.</p>
+                    <p class="small">Comece adicionando um novo contrato ao sistema.</p>
+                </div>
+            @endforelse
             </ul>
-            @else
-            <div class="card-body py-5 text-center text-muted">
-                <i class="bi bi-folder-x display-4 mb-3 d-block"></i>
-                <p class="h5">Nenhum contrato cadastrado ainda.</p>
-                <p class="small">Comece adicionando um novo contrato ao sistema.</p>
-            </div>
-            @endif
         
         </div>
-    </div> </x-layout>
+    </div> 
+</x-layout>

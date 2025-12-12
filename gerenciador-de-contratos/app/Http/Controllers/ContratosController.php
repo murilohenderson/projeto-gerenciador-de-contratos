@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ContratoFormRequest;
+use App\Repositories\EloquentContratosRepository;
 use App\Models\Contrato;
 
 class ContratosController extends Controller
 {
+    public function __construct(private EloquentContratosRepository $repository)
+    {
+        
+    }
     public function index(Request $request)
     {
         $contratos = Contrato::query()->orderBy('data_vigencia')->get();
@@ -21,27 +26,10 @@ class ContratosController extends Controller
         return view('contratos.create');
     }
     
-    public function store(Request $request)
+    public function store(ContratoFormRequest $request)
     {
-        $request->validate([
-            'nome' => 'required|min:3', 
-            'descricao' => 'nullable',
-            'numero_contrato' => 'required|unique:contratos,numero_contrato', 
-            'valor' => 'required|numeric',
-            'data_vigencia' => 'required|date',
-            'data_assinatura' => 'required|date',
-        ]);
-        try {
-            $contrato = DB::transaction(function () use ($request) {
-                Contrato::create($request->all());
-            });
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            return back()
-                        ->withInput()
-                        ->with('mensagem.erro', 'Erro ao cadastrar contrato. Tente novamente mais tarde');
-        }
-        
+        $contrato = $this->repository->add($request);
+
         return to_route('contratos.index')
                ->with('mensagem.sucesso', "Contrato '{$request->nome}' cadastrado com sucesso!");
     }
@@ -67,6 +55,7 @@ class ContratosController extends Controller
         $contrato->valor = $request->valor;
         $contrato->data_vigencia = $request->data_vigencia;
         $contrato->data_assinatura = $request->data_assinatura;
+        $contrato->status = $request->status;
         
         $contrato->save();
 

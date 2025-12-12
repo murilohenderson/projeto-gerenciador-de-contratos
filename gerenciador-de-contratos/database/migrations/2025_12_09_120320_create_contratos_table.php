@@ -19,6 +19,15 @@ return new class extends Migration
             $table->text('descricao')->nullable();
             $table->date('data_vigencia');
             $table->date('data_assinatura');
+            $table->enum('status', [
+                'Rascunho',
+                'Ativo',
+                'Em andamento',
+                'Pendente/Rascunho',
+                'Suspenso',
+                'Encerrado',
+                'Cancelado'
+            ])->default('Rascunho');
             $table->timestamps();
         });
     }

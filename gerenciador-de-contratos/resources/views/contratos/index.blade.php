@@ -51,12 +51,23 @@
                     <div class="d-flex justify-content-between align-items-start">
                         <div class="me-4 flex-grow-1">
 
-                            <span class="badge bg-light text-secondary border mb-2">
-                                <i class="bi bi-hash"></i> {{ $contrato->numero_contrato ?? 'S/N' }}
-                            </span>
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <span class="badge bg-light text-secondary border">
+                                    <i class="bi bi-hash"></i> {{ $contrato->numero_contrato ?? 'S/N' }}
+                                </span>
+                                
+                                {{-- **PARTE MODIFICADA: STATUS AGORA IGUAL AO NÚMERO** --}}
+                                <span class="badge bg-light text-secondary border">
+                                    <i class="bi bi-info-circle-fill me-1"></i> {{ $contrato->status }}
+                                </span>
+                                {{-- **FIM DA PARTE MODIFICADA** --}}
+
+                            </div>
+                            
                             <a href="{{ route('contratosinfo.index', $contrato) }}">
                                 <h3 class="h5 mb-2 text-dark fw-bold">{{ $contrato->nome }}</h3>
                             </a>
+                            
                             <div class="text-secondary small mb-3 text-break lh-sm">
                                 {{ Str::limit($contrato->descricao, 150) }}
                             </div>
@@ -99,7 +110,6 @@
                     </div>
                 </li>
                 @empty
-                {{-- Conteúdo a ser exibido SE o array $contratos estiver vazio --}}
                 <div class="card-body py-5 text-center text-muted">
                     <i class="bi bi-folder-x display-4 mb-3 d-block"></i>
                     <p class="h5">Nenhum contrato cadastrado ainda.</p>

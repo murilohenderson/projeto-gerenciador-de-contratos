@@ -15,6 +15,7 @@ class ContratosController extends Controller
     }
     public function index(Request $request)
     {
+
         $contratos = Contrato::query()->orderBy('data_vigencia')->get();
         $mensagemSucesso = session('mensagem.sucesso');
 

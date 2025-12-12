@@ -34,7 +34,7 @@
                 <label for="descricao" class="form-label">Descrição</label>
                 <textarea name="descricao" id="descricao" rows="4" required class="form-control" placeholder="Detalhes do objeto do contrato...">{{ $contrato->descricao ?? "" }}</textarea>
             </div>
-            
+
             <div class="col-md-4">
                 <label for="data_assinatura" class="form-label">Data de assinatura</label>
                 <input type="date" name="data_assinatura" id="data_assinatura" required class="form-control" value="{{ $contrato->data_assinatura ?? '' }}">
@@ -49,12 +49,20 @@
                 <label for="status" class="form-label">Status do Contrato</label>
                 <select class="form-select" id="status" name="status" required>
                     <option value="" disabled>Selecione o status...</option>
-                    <option value="ativo" {{ ($contrato->status ?? 'ativo') == 'ativo' ? 'selected' : '' }}>Ativo</option>
+
+                    <option value="ativo" {{ ($contrato->status ?? '') == 'ativo' ? 'selected' : '' }}>Ativo</option>
+
                     <option value="em_andamento" {{ ($contrato->status ?? '') == 'em_andamento' ? 'selected' : '' }}>Em Andamento</option>
+
                     <option value="pendente" {{ ($contrato->status ?? '') == 'pendente' ? 'selected' : '' }}>Pendente/Rascunho</option>
+
                     <option value="suspenso" {{ ($contrato->status ?? '') == 'suspenso' ? 'selected' : '' }}>Suspenso</option>
+
                     <option value="encerrado" {{ ($contrato->status ?? '') == 'encerrado' ? 'selected' : '' }}>Encerrado</option>
+
                     <option value="cancelado" {{ ($contrato->status ?? '') == 'cancelado' ? 'selected' : '' }}>Cancelado</option>
+
+                    <option value="rascunho" {{ ($contrato->status ?? '') == 'rascunho' ? 'selected' : '' }}>Rascunho</option>
                 </select>
             </div>
 

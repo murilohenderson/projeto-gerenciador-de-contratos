@@ -1,0 +1,1 @@
+Criação da funcionalidade de, ao clicar no nome de algum contrato na tela principal, ser redirecionado para uma página com as informações do contrato

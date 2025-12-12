@@ -31,8 +31,16 @@ class ContratosController extends Controller
             'data_vigencia' => 'required|date',
             'data_assinatura' => 'required|date',
         ]);
-
-        Contrato::create($request->all());
+        try {
+            $contrato = DB::transaction(function () use ($request) {
+                Contrato::create($request->all());
+            });
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return back()
+                        ->withInput()
+                        ->with('mensagem.erro', 'Erro ao cadastrar contrato. Tente novamente mais tarde');
+        }
         
         return to_route('contratos.index')
                ->with('mensagem.sucesso', "Contrato '{$request->nome}' cadastrado com sucesso!");
